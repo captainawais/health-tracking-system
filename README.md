@@ -14,8 +14,8 @@ https://health-tracking-system.vercel.app/
 
 ## 💻 GitHub Repository
 
-👉 **Source Code:**
-https://github.com/captainawais/health-tracking-system
+👉 **Website (Github):**
+https://captainawais.github.io/health-tracking-system/
 
 ---
 
