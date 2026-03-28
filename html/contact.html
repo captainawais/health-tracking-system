@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | Health Tracking</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<!-- HEADER LOAD -->
+<header id="headtop">
+  <div id="logo">
+    <h2>Health <span>Tracking</span></h2>
+  </div>
+
+  <div id="address">
+    <p>📞 +92 331 8650997</p>
+    <p>📧 awaisfarooq63100@gmail.com</p>
+  </div>
+</header>
+
+<nav id="navigation">
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="categoriges.html">Categories</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="aboutus.html">About</a></li>
+    <li><a href="#" onclick="toggleDarkMode()" id="themeIcon">🌙</a></li>
+    <li><a href="login.html" onclick="logout()">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="store1">
+  <div class="hero-content">
+    <h1>Contact Us</h1>
+    <p>We are here to help you</p>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="category-section">
+
+  <h2 class="section-title">Send Message</h2>
+
+  <form id="contactForm" class="contact-form">
+
+    <input type="text" id="firstName" placeholder="First Name" required>
+    <input type="text" id="lastName" placeholder="Last Name" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+
+    <textarea id="message" placeholder="Your Message..." rows="5" required></textarea>
+
+    <button type="submit" class="btn"  id="sendBtn">Send Message</button>
+
+  </form>
+
+  <p id="statusMsg" style="text-align:center;margin-top:15px;"></p>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 Health Tracking | Designed for Better Lifestyle</p>
+</footer>
+
+<!-- EMAILJS (ONLINE MODE) -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<!-- MAIN JS -->
+<script src="../js/script.js"></script>
+
+</body>
+</html>
