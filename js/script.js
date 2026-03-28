@@ -207,34 +207,37 @@ window.location.href = "/html/login.html";
 /* LOADER (FINAL FIXED) */
 /* ========================= */
 
-window.addEventListener("load", () => {
-const loader = document.getElementById("skeleton-loader");
-const current = window.location.pathname.split("/").pop();
+window.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("skeleton-loader");
 
-if (!loader) return;
+  if (!loader) return;
 
-// hide by default
-loader.style.display = "none";
+  // 🔥 ALWAYS hidden by default (no first load flash)
+  loader.classList.add("hidden-loader");
 
-// ❌ never on login page
-if (current === "login.html") return;
+  // check trigger
+  const shouldShow = sessionStorage.getItem("afterLoginLoader");
 
-const shouldShow = sessionStorage.getItem("afterLoginLoader");
+  if (shouldShow === "true") {
 
-if (shouldShow === "true") {
+    // show AFTER page ready (important)
+    setTimeout(() => {
 
-```
-loader.style.display = "block";
+      loader.classList.remove("hidden-loader");
 
-setTimeout(() => {
-  loader.style.opacity = "0";
-  setTimeout(() => {
-    loader.style.display = "none";
-  }, 300);
-}, 600);
+      setTimeout(() => {
+        loader.style.opacity = "0";
 
-sessionStorage.removeItem("afterLoginLoader");
-```
+        setTimeout(() => {
+          loader.classList.add("hidden-loader");
+          loader.style.opacity = "1";
+        }, 300);
 
-}
+      }, 700);
+
+    }, 100); // small delay to avoid flash
+
+    sessionStorage.removeItem("afterLoginLoader");
+  }
 });
+

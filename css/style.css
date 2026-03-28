@@ -2,12 +2,18 @@
 /* SKELETON LOADER */
 /* ========================= */
 
+.hidden-loader {
+  display: none !important;
+}
+
 #skeleton-loader {
   position: fixed;
   inset: 0;
   background: #f5f7fa;
   z-index: 9999;
   padding: 20px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
 /* shimmer animation */
@@ -559,4 +565,3 @@ body.dark .card {
 body.dark #about_us {
   background: #0f172a;
 }
-
