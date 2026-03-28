@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Health Tracking</title>
+
+  <!-- FONT -->
+  <link href="../fonts/poppins.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body class="login-page">
+
+
+  
+<div class="login-container">
+
+    <div class="login-info">
+  <p><b>Demo Instructions:</b></p>
+  <p>👉 Click <b>Register</b> first</p>
+  <p>👉 Enter any username & password</p>
+  <p>👉 Then login using same details</p>
+  </div>
+
+  <!-- LOGO -->
+  <div class="login-logo">
+    <h2>Health <span>Tracking</span></h2>
+  </div>
+
+  <!-- TITLE -->
+  <h3 class="login-title">Welcome Back 👋</h3>
+
+  <!-- FORM -->
+  <form id="loginForm">
+
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+
+    <button type="submit" class="btn">Login</button>
+
+  </form>
+
+  <!-- REGISTER -->
+  <p class="login-text">
+    Don't have account?
+    <span onclick="register()">Register</span>
+  </p>
+
+  <!-- MESSAGE -->
+  <div id="message"></div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>
