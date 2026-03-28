@@ -1,32 +1,30 @@
 /* ========================= */
-/* SMART AUTH SYSTEM (FIXED) */
+/* SMART AUTH SYSTEM (FINAL) */
 /* ========================= */
 
 (function () {
 const isLoggedIn = localStorage.getItem("isLoggedIn");
-const currentPage = window.location.pathname;
-
-// ❌ REMOVE FORCED REDIRECT FROM INDEX
-// ✅ Only protect internal pages
+const currentPath = window.location.pathname;
+const current = currentPath.split("/").pop();
 
 const protectedPages = [
-"dashboard.html",
 "categories.html",
 "aboutus.html",
 "service.html",
 "contact.html",
-"week.html"
+"week.html",
+"fat.html",
+"normal.html"
 ];
 
-const current = currentPage.split("/").pop();
-
+// ✅ protect only internal pages
 if (protectedPages.includes(current) && !isLoggedIn) {
-window.location.href = "html/login.html";
+window.location.href = "/html/login.html";
 }
 
-// agar login hai aur login page pe hai → redirect home
-if (isLoggedIn && currentPage.includes("login.html")) {
-window.location.href = "../index.html";
+// ✅ already logged in → avoid login page
+if (isLoggedIn && current === "login.html") {
+window.location.href = "/index.html";
 }
 })();
 
@@ -39,19 +37,13 @@ const links = document.querySelectorAll("#navigation a");
 
 let currentPage = window.location.pathname.split("/").pop();
 
-if (currentPage === "") {
-currentPage = "index.html";
-}
+if (currentPage === "") currentPage = "index.html";
 
 links.forEach(link => {
 const linkPage = link.getAttribute("href").split("/").pop();
-
-```
 if (linkPage === currentPage) {
-  link.classList.add("active");
+link.classList.add("active");
 }
-```
-
 });
 });
 
@@ -63,9 +55,9 @@ function loadHeader() {
 const container = document.getElementById("header-container");
 if (!container) return;
 
-let path = window.location.pathname;
+const path = window.location.pathname;
 
-let basePath = path.includes("/html/")
+const basePath = path.includes("/html/")
 ? "../components/header.html"
 : "components/header.html";
 
@@ -122,13 +114,14 @@ if (username === savedUsername && password === savedPassword) {
 
 ```
 localStorage.setItem("isLoggedIn", "true");
+localStorage.setItem("hasVisited", "true"); // 👈 mark first visit done
 
 msg.style.color = "green";
 msg.textContent = "Login successful!";
 
 setTimeout(() => {
-  window.location.href = "../index.html";
-}, 800);
+  window.location.href = "/index.html";
+}, 500);
 ```
 
 } else {
@@ -175,20 +168,51 @@ msg.textContent = "Registered! Now login.";
 
 function logout() {
 localStorage.removeItem("isLoggedIn");
-
-window.location.href = "html/login.html";
+window.location.href = "/html/login.html";
 }
 
 /* ========================= */
-/* SKELETON LOADER */
+/* SMART SKELETON LOADER */
 /* ========================= */
 
 window.addEventListener("load", () => {
 const loader = document.getElementById("skeleton-loader");
+const current = window.location.pathname.split("/").pop();
 
-if (loader) {
-setTimeout(() => {
+if (!loader) return;
+
+// ❌ login page → no loader
+if (current === "login.html") {
 loader.style.display = "none";
-}, 500);
+return;
+}
+
+const hasVisited = localStorage.getItem("hasVisited");
+
+// 🎯 FIRST TIME → ALWAYS SHOW
+if (!hasVisited) {
+localStorage.setItem("hasVisited", "true");
+
+```
+setTimeout(() => {
+  loader.style.opacity = "0";
+  setTimeout(() => loader.style.display = "none", 300);
+}, 1200);
+
+return;
+```
+
+}
+
+// 🎲 RANDOM LOADER (30% chance)
+const showLoader = Math.random() < 0.3;
+
+if (showLoader) {
+setTimeout(() => {
+loader.style.opacity = "0";
+setTimeout(() => loader.style.display = "none", 300);
+}, 600);
+} else {
+loader.style.display = "none";
 }
 });
