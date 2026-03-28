@@ -24,6 +24,7 @@ https://captainawais.github.io/health-tracking-system/
 * 🔐 Login & Register System (Local Storage Based)
 * 🎯 Smart Loader (Only shows after login)
 * 🌙 Dark Mode (Persistent)
+* 📱  Offline + Online email system  
 * 📱 Fully Responsive (Mobile + Desktop)
 * 🎨 Modern UI Design
 * ⚡ Fast Performance (No frameworks)
