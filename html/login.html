@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,55 +7,94 @@
   <title>Login | Health Tracking</title>
 
   <!-- FONT -->
+
   <link href="../fonts/poppins.css" rel="stylesheet">
 
   <!-- CSS -->
+
   <link rel="stylesheet" href="../css/style.css">
-
 </head>
-
 
 <body class="login-page">
 
-
-  
 <div class="login-container">
 
-    <div class="login-info">
-  <p><b>Demo Instructions:</b></p>
-  <p>👉 Click <b>Register</b> first</p>
-  <p>👉 Enter any username & password</p>
-  <p>👉 Then login using same details</p>
+  <!-- INFO -->
+
+  <div class="login-info">
+    <p><b>Demo Instructions:</b></p>
+    <p>👉 Click <b>Register</b> first</p>
+    <p>👉 Enter any username & password</p>
+    <p>👉 Then login using same details</p>
   </div>
 
   <!-- LOGO -->
+
   <div class="login-logo">
     <h2>Health <span>Tracking</span></h2>
   </div>
 
   <!-- TITLE -->
+
   <h3 class="login-title">Welcome Back 👋</h3>
 
   <!-- FORM -->
-  <form id="loginForm">
 
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
+  <form id="loginForm" autocomplete="off">
 
-    <button type="submit" class="btn">Login</button>
+
+<input 
+  type="text" 
+  id="username" 
+  placeholder="Username" 
+  required 
+/>
+
+<input 
+  type="password" 
+  id="password" 
+  placeholder="Password" 
+  required 
+/>
+
+<button type="submit" class="btn">Login</button>
+
 
   </form>
 
+  <!-- MESSAGE (IMPORTANT) -->
+
+  <div 
+    id="message"
+    style="
+      margin-top: 12px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 500;
+      min-height: 20px;
+    "
+  ></div>
+
   <!-- REGISTER -->
-  <p class="login-text">
+
+  <p class="login-text" style="margin-top: 10px;">
     Don't have account?
-    <span onclick="register()">Register</span>
+    <span 
+      onclick="register()" 
+      style="
+        cursor:pointer;
+        color:#16a085;
+        font-weight:600;
+        margin-left:5px;
+      "
+    >
+      Register
+    </span>
   </p>
 
-  <!-- MESSAGE -->
-  <div id="message"></div>
-
 </div>
+
+<!-- JS -->
 
 <script src="../js/script.js"></script>
 

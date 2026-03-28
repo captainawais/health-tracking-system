@@ -1,11 +1,10 @@
 /* ========================= */
-/* SMART AUTH SYSTEM (FINAL) */
+/* AUTH SYSTEM (CLEAN FINAL) */
 /* ========================= */
 
 (function () {
 const isLoggedIn = localStorage.getItem("isLoggedIn");
-const currentPath = window.location.pathname;
-const current = currentPath.split("/").pop();
+const current = window.location.pathname.split("/").pop();
 
 const protectedPages = [
 "categories.html",
@@ -17,26 +16,25 @@ const protectedPages = [
 "normal.html"
 ];
 
-// ✅ protect only internal pages
 if (protectedPages.includes(current) && !isLoggedIn) {
 window.location.href = "/html/login.html";
 }
 
-// ✅ already logged in → avoid login page
 if (isLoggedIn && current === "login.html") {
 window.location.href = "/index.html";
 }
 })();
 
 /* ========================= */
-/* AUTO ACTIVE NAVBAR */
+/* DOM READY (SAFE INIT) */
 /* ========================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
+/* ===== NAVBAR ACTIVE ===== */
 const links = document.querySelectorAll("#navigation a");
 
 let currentPage = window.location.pathname.split("/").pop();
-
 if (currentPage === "") currentPage = "index.html";
 
 links.forEach(link => {
@@ -45,6 +43,25 @@ if (linkPage === currentPage) {
 link.classList.add("active");
 }
 });
+
+/* ===== LOGIN FORM ===== */
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+loginForm.addEventListener("submit", function(e) {
+e.preventDefault();
+login();
+});
+}
+
+/* ===== DARK MODE LOAD ===== */
+const icon = document.getElementById("themeIcon");
+
+if (localStorage.getItem("darkMode") === "enabled") {
+document.body.classList.add("dark");
+if (icon) icon.textContent = "☀️";
+}
+
 });
 
 /* ========================= */
@@ -65,7 +82,8 @@ fetch(basePath)
 .then(res => res.text())
 .then(data => {
 container.innerHTML = data;
-});
+})
+.catch(() => console.log("Header load failed"));
 }
 
 loadHeader();
@@ -73,15 +91,6 @@ loadHeader();
 /* ========================= */
 /* DARK MODE */
 /* ========================= */
-
-window.addEventListener("DOMContentLoaded", () => {
-const icon = document.getElementById("themeIcon");
-
-if (localStorage.getItem("darkMode") === "enabled") {
-document.body.classList.add("dark");
-if (icon) icon.textContent = "☀️";
-}
-});
 
 function toggleDarkMode() {
 document.body.classList.toggle("dark");
@@ -98,68 +107,83 @@ if (icon) icon.textContent = "🌙";
 }
 
 /* ========================= */
-/* LOGIN SYSTEM */
-/* ========================= */
-
-function login() {
-const username = document.getElementById("username")?.value.trim();
-const password = document.getElementById("password")?.value.trim();
-const savedUsername = localStorage.getItem("username");
-const savedPassword = localStorage.getItem("password");
-const msg = document.getElementById("message");
-
-if (!msg) return;
-
-if (username === savedUsername && password === savedPassword) {
-
-```
-localStorage.setItem("isLoggedIn", "true");
-localStorage.setItem("hasVisited", "true"); // 👈 mark first visit done
-
-msg.style.color = "green";
-msg.textContent = "Login successful!";
-
-setTimeout(() => {
-  window.location.href = "/index.html";
-}, 500);
-```
-
-} else {
-msg.style.color = "red";
-msg.textContent = "Invalid username or password.";
-}
-}
-
-const loginForm = document.getElementById("loginForm");
-
-if (loginForm) {
-loginForm.addEventListener("submit", function(e) {
-e.preventDefault();
-login();
-});
-}
-
-/* ========================= */
-/* REGISTER */
+/* REGISTER (FIXED) */
 /* ========================= */
 
 function register() {
 const username = prompt("Enter username:");
 const password = prompt("Enter password:");
+
 const msg = document.getElementById("message");
 
-if (!msg) return;
-
-if (username && password) {
-localStorage.setItem("username", username);
-localStorage.setItem("password", password);
-
-```
-msg.style.color = "green";
-msg.textContent = "Registered! Now login.";
-```
-
+if (!username || !password) {
+if (msg) {
+msg.style.color = "red";
+msg.textContent = "Invalid input!";
 }
+return;
+}
+
+localStorage.setItem("username", username.trim());
+localStorage.setItem("password", password.trim());
+
+if (msg) {
+msg.style.color = "green";
+msg.textContent = "Registered successfully!";
+}
+}
+
+/* ========================= */
+/* LOGIN (FULL FIX) */
+/* ========================= */
+
+function login() {
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+
+const msg = document.getElementById("message");
+
+if (!usernameInput || !passwordInput || !msg) return;
+
+const username = usernameInput.value.trim();
+const password = passwordInput.value.trim();
+
+const savedUsername = localStorage.getItem("username")?.trim();
+const savedPassword = localStorage.getItem("password")?.trim();
+
+// ❌ empty input
+if (!username || !password) {
+msg.style.color = "red";
+msg.textContent = "Enter username & password!";
+return;
+}
+
+// ❌ not registered
+if (!savedUsername || !savedPassword) {
+msg.style.color = "red";
+msg.textContent = "Please register first!";
+return;
+}
+
+// ❌ wrong credentials
+if (username !== savedUsername || password !== savedPassword) {
+msg.style.color = "red";
+msg.textContent = "Wrong username or password!";
+return;
+}
+
+// ✅ SUCCESS
+localStorage.setItem("isLoggedIn", "true");
+
+// 🔥 loader only after login
+sessionStorage.setItem("afterLoginLoader", "true");
+
+msg.style.color = "green";
+msg.textContent = "Login successful!";
+
+setTimeout(() => {
+window.location.href = "/index.html";
+}, 300);
 }
 
 /* ========================= */
@@ -168,11 +192,19 @@ msg.textContent = "Registered! Now login.";
 
 function logout() {
 localStorage.removeItem("isLoggedIn");
+
+// reset dark mode
+localStorage.removeItem("darkMode");
+document.body.classList.remove("dark");
+
+// reset session
+sessionStorage.clear();
+
 window.location.href = "/html/login.html";
 }
 
 /* ========================= */
-/* SMART SKELETON LOADER */
+/* LOADER (FINAL FIXED) */
 /* ========================= */
 
 window.addEventListener("load", () => {
@@ -181,38 +213,28 @@ const current = window.location.pathname.split("/").pop();
 
 if (!loader) return;
 
-// ❌ login page → no loader
-if (current === "login.html") {
+// hide by default
 loader.style.display = "none";
-return;
-}
 
-const hasVisited = localStorage.getItem("hasVisited");
+// ❌ never on login page
+if (current === "login.html") return;
 
-// 🎯 FIRST TIME → ALWAYS SHOW
-if (!hasVisited) {
-localStorage.setItem("hasVisited", "true");
+const shouldShow = sessionStorage.getItem("afterLoginLoader");
+
+if (shouldShow === "true") {
 
 ```
+loader.style.display = "block";
+
 setTimeout(() => {
   loader.style.opacity = "0";
-  setTimeout(() => loader.style.display = "none", 300);
-}, 1200);
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 300);
+}, 600);
 
-return;
+sessionStorage.removeItem("afterLoginLoader");
 ```
 
-}
-
-// 🎲 RANDOM LOADER (30% chance)
-const showLoader = Math.random() < 0.3;
-
-if (showLoader) {
-setTimeout(() => {
-loader.style.opacity = "0";
-setTimeout(() => loader.style.display = "none", 300);
-}, 600);
-} else {
-loader.style.display = "none";
 }
 });
