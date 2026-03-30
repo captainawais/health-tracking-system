@@ -182,7 +182,7 @@ msg.style.color = "green";
 msg.textContent = "Login successful!";
 
 setTimeout(() => {
-window.location.href = window.location.origin + "/health-tracking-system/index.html";
+window.location.href = "index.html";
 }, 300);
 }
 
@@ -200,7 +200,7 @@ document.body.classList.remove("dark");
 // reset session
 sessionStorage.clear();
 
-window.location.href = "/html/login.html";
+window.location.href = "/health-tracking-system/html/login.html";
 }
 
 /* ========================= */
