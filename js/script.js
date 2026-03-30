@@ -182,7 +182,7 @@ msg.style.color = "green";
 msg.textContent = "Login successful!";
 
 setTimeout(() => {
-window.location.href = "index.html";
+window.location.href = window.location.origin + "/health-tracking-system/index.html";
 }, 300);
 }
 
