@@ -182,7 +182,7 @@ msg.style.color = "green";
 msg.textContent = "Login successful!";
 
 setTimeout(() => {
-window.location.href = "/index.html";
+window.location.href = "index.html";
 }, 300);
 }
 
